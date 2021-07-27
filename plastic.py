@@ -13,7 +13,6 @@ EMBED_ICON_URL = ''
 EMBED_DESCRIPTION_FORMAT = '**{user} checked in a new changeset** \n\n**Comments:**\n{comment}'
 EMBED_DESCRIPTIONLONG_FORMAT = '**{user} checked in a new changeset** \n\n**For comments check file (more than 200 characters):**'
 
-
 # get change count
 change_count = 0
 for line in sys.stdin:
