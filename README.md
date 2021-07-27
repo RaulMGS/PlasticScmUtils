@@ -9,3 +9,4 @@ To install Discord Webhook follow the instructions found at https://pypi.org/pro
 
 ## Deploying
 
+## Usage
