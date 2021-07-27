@@ -3,10 +3,13 @@ import os
 import datetime
 from discord_webhook import DiscordWebhook
 
+# Script Setup
+WEBHOOK_URL = 'YOUR_WEBHOOK_URL'
+WEBHOOK_KEEP_FILES = False
+
 # Checkin formats
 checkinStr = '**{} checked in a new changeset** \n{} files have changed \n\n**Comments:**\n{}'
 checkinLongStr = '@everyone **{} checked in a new changeset** \n{} files have changed \n\n**For comments check file (more than 200 characters):**'
-webhook_url = 'YOUR_WEBHOOK_URL'
 
 # get change count
 change_count = 0
@@ -23,7 +26,7 @@ if len(os.environ['PLASTIC_COMMENT']) > 1500:
 	webhook_content = checkinLongStr.format(os.environ['PLASTIC_USER'] ,change_count)
  
 # create webhook
-webhook = DiscordWebhook(url=webhook_url, content = webhook_content )
+webhook = DiscordWebhook(url=WEBHOOK_URL, content = webhook_content )
 
 # add file to webhook if char limit reached
 if len(os.environ['PLASTIC_COMMENT']) > 1500:
@@ -38,6 +41,9 @@ if len(os.environ['PLASTIC_COMMENT']) > 1500:
 	with open(path, "rb") as f:
 		webhook.add_file(file=f.read(), filename=path)
 
-	# TODO: remove file when done
-		
-response = webhook.execute()
+	# remove file when done
+	if os.path.exists(path) and (not WEBHOOK_KEEP_FILES):
+		os.remove(path)
+
+# post webhook
+webhook.execute()
