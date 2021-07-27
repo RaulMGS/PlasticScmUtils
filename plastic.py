@@ -1,3 +1,4 @@
+import sys
 import os
 import datetime
 from discord_webhook import DiscordWebhook
@@ -27,7 +28,7 @@ webhook = DiscordWebhook(url=webhook_url, content = webhook_content )
 # add file to webhook if char limit reached
 if len(os.environ['PLASTIC_COMMENT']) > 1500:
 	
-    # write to file. 
+	# write to file. 
 	path = "{}_{}.txt".format(timestr, os.environ['PLASTIC_USER'])
 	file = open(path, "w") 
 	file.write(checkinStr.format(os.environ['PLASTIC_USER'] ,change_count, os.environ['PLASTIC_COMMENT'])) 
@@ -36,5 +37,7 @@ if len(os.environ['PLASTIC_COMMENT']) > 1500:
 	# Load file to webhook
 	with open(path, "rb") as f:
 		webhook.add_file(file=f.read(), filename=path)
+
+	# TODO: remove file when done
 		
 response = webhook.execute()
