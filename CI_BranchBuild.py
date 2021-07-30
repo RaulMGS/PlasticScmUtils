@@ -74,8 +74,8 @@ def run_build_pipeline():
 #-Runtime-----------------------------------------
 #-------------------------------------------------
 
-branch, changes = 'main/staging', 0 #parse_plastic_stdin()
-user = 'test' #parse_plastic_user()
+branch, changes = parse_plastic_stdin()
+user = parse_plastic_user()
 
 # We only want to continue if we are on the build branch. We don't want to start builds from checkins 
 # that are on branches irrelevant to the building procedure
