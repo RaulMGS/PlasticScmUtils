@@ -8,17 +8,19 @@ from discord_webhook import DiscordEmbed
 WEBHOOK_URL = 'WEBHOOK_URL'
 
 # Embed content formats
-EMBED_TITLE_FORMAT = 'New Northern Lights build started'
+EMBED_TITLE_FORMAT = 'Northern Lights automatic build started'
 EMBED_ICON_URL = 'https://i.imgur.com/koyPU5S.png'
 EMBED_DESCRIPTION_FORMAT = '{user} started a new Unity Build'
 
 # Build Utils
 BUILD_TARGET_BRANCH = 'main/staging'
 BUILD_UNITY_PATH = 'D:/Work/Unity Installs/2019.4.26f1/Editor'
-BUILD_WORKSPACE_PATH = 'D:/Work/Unity Projects/Northern Lights'
-BUILD_RESULT_PATH = 'D:/Work/Unity Builds/NorthernLights-Release'
+BUILD_WORKSPACE_PATH = 'E:/Work/Unity Projects/NorthernLights-Release'
+BUILD_RESULT_PATH = 'E:/Work/Unity Builds/NorthernLights-Release/Northern Lights.exe'
 
-#-Implementation---------------------------------
+#-Implementation----------------------------------
+#-------------------------------------------------
+
 # Data parsing
 def parse_plastic_stdin():
     change_branch = ''
@@ -49,7 +51,7 @@ def get_embed_for(title, contents, change_count, change_branch):
     embed_instance.add_embed_field(name='Files Changed', value=change_count)
     embed_instance.add_embed_field(name='Branch', value=change_branch)
     embed_instance.set_timestamp()
-    embed_instance.set_color('03b2f8')
+    embed_instance.set_color('30f803')
     embed_instance.set_thumbnail(url=EMBED_ICON_URL)
     return embed_instance
 
@@ -63,14 +65,14 @@ def run_build_pipeline():
     os.chdir(BUILD_WORKSPACE_PATH)
     os.system("cm update")
     os.chdir(BUILD_UNITY_PATH)
-    os.system("Unity.exe -quit -batchmode -projectpath \"{inpath}\" -buildWindows64Player \"{outpath}\"".format(
+    os.startfile("Unity.exe -quit -batchmode -projectpath \"{inpath}\" -buildWindows64Player \"{outpath}\"".format(
         inpath = BUILD_WORKSPACE_PATH,
         outpath = BUILD_RESULT_PATH
     ))
 
-
-run_build_pipeline()
 #-Runtime-----------------------------------------
+#-------------------------------------------------
+
 branch, changes = parse_plastic_stdin()
 user = parse_plastic_user()
 

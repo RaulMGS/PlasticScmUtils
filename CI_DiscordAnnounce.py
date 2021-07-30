@@ -16,6 +16,8 @@ EMBED_DESCRIPTION_FORMAT = '{user} checked in a new changeset \n\n**Comments:**\
 EMBED_DESCRIPTIONLONG_FORMAT = '{user} checked in a new changeset \n\n**For comments check file (more than 200 characters)**'
 
 #-Implementation---------------------------------
+#-------------------------------------------------
+
 # Data parsing
 def parse_plastic_stdin():
     change_branch = '' 
@@ -93,6 +95,8 @@ def post_webhook(url, embed):
     webhook_instance.execute()
 
 #-Runtime-----------------------------------------
+#-------------------------------------------------
+
 # get vars for embed
 branch, changes = parse_plastic_stdin()
 title = EMBED_TITLE_FORMAT.format(branch=branch)
