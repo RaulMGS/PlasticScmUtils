@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import subprocess
 from discord_webhook import DiscordWebhook
 from discord_webhook import DiscordEmbed
 
@@ -15,8 +16,8 @@ EMBED_DESCRIPTION_FORMAT = '{user} started a new Unity Build'
 # Build Utils
 BUILD_TARGET_BRANCH = 'main/staging'
 BUILD_UNITY_PATH = 'D:/Work/Unity Installs/2019.4.26f1/Editor'
-BUILD_WORKSPACE_PATH = 'E:/Work/Unity Projects/NorthernLights-Release'
-BUILD_RESULT_PATH = 'E:/Work/Unity Builds/NorthernLights-Release/Northern Lights.exe'
+BUILD_WORKSPACE_PATH = 'D:/Work/Unity Projects/Northern Lights/'
+BUILD_RESULT_PATH = 'D:/Work/Unity Builds/NorthernLights-Release/Northern Lights'
 
 #-Implementation----------------------------------
 #-------------------------------------------------
@@ -65,7 +66,7 @@ def run_build_pipeline():
     os.chdir(BUILD_WORKSPACE_PATH)
     os.system("cm update")
     os.chdir(BUILD_UNITY_PATH)
-    os.startfile("Unity.exe -quit -batchmode -projectpath \"{inpath}\" -buildWindows64Player \"{outpath}\"".format(
+    os.popen("Unity.exe -quit -batchmode -projectpath \"{inpath}\" -buildWindows64Player \"{outpath}\"".format(
         inpath = BUILD_WORKSPACE_PATH,
         outpath = BUILD_RESULT_PATH
     ))
@@ -73,8 +74,8 @@ def run_build_pipeline():
 #-Runtime-----------------------------------------
 #-------------------------------------------------
 
-branch, changes = parse_plastic_stdin()
-user = parse_plastic_user()
+branch, changes = 'main/staging', 0 #parse_plastic_stdin()
+user = 'test' #parse_plastic_user()
 
 # We only want to continue if we are on the build branch. We don't want to start builds from checkins 
 # that are on branches irrelevant to the building procedure
