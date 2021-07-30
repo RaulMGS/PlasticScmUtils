@@ -15,13 +15,14 @@ EMBED_DESCRIPTION_FORMAT = '{user} started a new Unity Build'
 # Build Utils
 BUILD_TARGET_BRANCH = 'main/staging'
 BUILD_UNITY_PATH = 'D:/Work/Unity Installs/2019.4.26f1/Editor'
-BUILD_WORKSPACE_PATH = 'E:/Work/Unity Projects/NorthernLights-Release'
-BUILD_RESULT_PATH = 'E:/Work/Unity Builds/NorthernLights-Release'
+BUILD_WORKSPACE_PATH = 'D:/Work/Unity Projects/Northern Lights'
+BUILD_RESULT_PATH = 'D:/Work/Unity Builds/NorthernLights-Release'
 
 #-Implementation---------------------------------
 # Data parsing
 def parse_plastic_stdin():
-    change_branch = '', change_count = 0
+    change_branch = ''
+    change_count = 0
     for line in sys.stdin:
         change_count = change_count + 1
         if not change_branch:
@@ -67,6 +68,8 @@ def run_build_pipeline():
         outpath = BUILD_RESULT_PATH
     ))
 
+
+run_build_pipeline()
 #-Runtime-----------------------------------------
 branch, changes = parse_plastic_stdin()
 user = parse_plastic_user()

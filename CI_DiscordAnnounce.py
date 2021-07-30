@@ -18,7 +18,8 @@ EMBED_DESCRIPTIONLONG_FORMAT = '{user} checked in a new changeset \n\n**For comm
 #-Implementation---------------------------------
 # Data parsing
 def parse_plastic_stdin():
-    change_branch = '', change_count = 0
+    change_branch = '' 
+    change_count = 0
     for line in sys.stdin:
         change_count = change_count + 1
         if not change_branch:
