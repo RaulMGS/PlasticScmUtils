@@ -1,7 +1,6 @@
 import os
 import re
 import sys
-import subprocess
 from discord_webhook import DiscordWebhook
 from discord_webhook import DiscordEmbed
 
@@ -16,12 +15,11 @@ EMBED_DESCRIPTION_FORMAT = '{user} started a new Unity Build'
 # Build Utils
 BUILD_TARGET_BRANCH = 'main/staging'
 BUILD_UNITY_PATH = 'D:/Work/Unity Installs/2019.4.26f1/Editor'
-BUILD_WORKSPACE_PATH = 'D:/Work/Unity Projects/Northern Lights/'
-BUILD_RESULT_PATH = 'D:/Work/Unity Builds/NorthernLights-Release/Northern Lights'
+BUILD_WORKSPACE_PATH = 'E:/Work/Unity Projects/NorthernLights-Release/'
+BUILD_RESULT_PATH = 'D:/Work/Unity Builds/NorthernLights-Release/Northern Lights.exe'
 
 #-Implementation----------------------------------
 #-------------------------------------------------
-
 # Data parsing
 def parse_plastic_stdin():
     change_branch = ''
@@ -73,12 +71,11 @@ def run_build_pipeline():
 
 #-Runtime-----------------------------------------
 #-------------------------------------------------
-
 branch, changes = parse_plastic_stdin()
 user = parse_plastic_user()
 
 # We only want to continue if we are on the build branch. We don't want to start builds from checkins 
-# that are on branches irrelevant to the building procedure
+# that are on branches irrelevant to the building pipeline
 if branch == BUILD_TARGET_BRANCH:
     # Compose embed for webhook message
     embed = get_embed_for(

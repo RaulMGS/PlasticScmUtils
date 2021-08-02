@@ -3,11 +3,11 @@ import sys
 import datetime
 import re
 from discord_webhook import DiscordWebhook
-from discord_webhook import DiscordEmbed
+from discord_webhook import DiscordEmbed  
 
 # Script setup
 WEBHOOK_URL = 'WEBHOOK_URL'
-WEBHOOK_KEEP_FILES = False
+WEBHOOK_KEEP_FILES = False 
 
 # Embed content formats
 EMBED_TITLE_FORMAT = 'New check-in in {branch}'
@@ -38,6 +38,11 @@ def parse_plastic_envvars():
 
 def parse_datetime():
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+
+def parse_plastic_tags():
+    comment = os.environ['PLASTIC_COMMENT']
+    tag_matches = re.findall(r"\[\#([0-9]+?)\]", comment)
+    return tag_matches
 
 # File logging
 def mk_logfile(path): 
@@ -71,6 +76,7 @@ def get_embed_for(title, contents, change_count, change_branch):
     embed_instance.set_thumbnail(url = EMBED_ICON_URL)
     return embed_instance
 
+
 def post_webhook(url, embed):
     # construct webhook message
     webhook_instance = DiscordWebhook(url=url)
@@ -102,6 +108,9 @@ branch, changes = parse_plastic_stdin()
 title = EMBED_TITLE_FORMAT.format(branch=branch)
 comments = parse_plastic_envvars()
 timestamp = parse_datetime()
+
+issues = parse_plastic_tags()
+# TODO: Parse tags and pass to github api
 
 # get embed and execute webhook
 embed = get_embed_for(title, comments, changes, branch)
